@@ -1,0 +1,69 @@
+{
+  "model_version": "v0.1-ridge-form-usage",
+  "created_utc": "2026-09-30T17:24:51+00:00",
+  "season": 2026,
+  "through_week": 3,
+  "teams_with_data_through_that_week": 32,
+  "max_week_in_input": 3,
+  "rows": 222,
+  "rows_by_pos": {
+    "WR": 88,
+    "RB": 71,
+    "QB": 32,
+    "TE": 31
+  },
+  "train_seasons": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "train_rows_by_pos": {
+    "WR": 7466,
+    "RB": 6251,
+    "QB": 2736,
+    "TE": 2631
+  },
+  "features": [
+    "pts3",
+    "std",
+    "c3",
+    "t3",
+    "a3",
+    "c1",
+    "t1",
+    "a1",
+    "missed3",
+    "played_last"
+  ],
+  "ridge_lambda": 20.0,
+  "assumptions": {
+    "startable_top_K": {
+      "QB": 12,
+      "RB": 24,
+      "WR": 36,
+      "TE": 12
+    },
+    "rostered_proxy_top_N_by_season_ppg": {
+      "QB": 14,
+      "RB": 30,
+      "WR": 42,
+      "TE": 14
+    },
+    "scoring": "half-PPR, 4pt pass TD, -1 INT, -2 fumble lost"
+  },
+  "schedule_check": {
+    "next_week": 4,
+    "next_week_games": 16,
+    "first_gameday": "2026-10-01",
+    "next_week_games_already_scored": 0
+  },
+  "input_sha256": "e293e213908f746db982cd9112f5016125a42eeeec16c4773b35c6cc5edf6327",
+  "output_sha256": "48ccaf96d0f28413fc23a3078618c42a44a579759a406f5f506cbd86a37f2b73",
+  "pandas": "3.0.2",
+  "numpy": "2.4.4"
+}

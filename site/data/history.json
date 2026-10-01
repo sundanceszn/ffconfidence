@@ -1,0 +1,14 @@
+[
+ {
+  "model_version": "v0.2",
+  "run": "tue",
+  "season": 2026,
+  "through_week": 3,
+  "decision_for_week": 4,
+  "created_utc": "2026-09-30T22:41:32+00:00",
+  "created_before_first_kickoff": true,
+  "rows": 222,
+  "injury_report_teams_for_decision_week": null,
+  "file": "snapshots/2026/after_wk03_tue_v0.2.csv"
+ }
+]

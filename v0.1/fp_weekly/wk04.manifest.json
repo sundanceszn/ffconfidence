@@ -1,0 +1,18 @@
+{
+  "source": "FantasyPros projections export, downloaded by user",
+  "label_given_by_user": "week 4 (2026 season)",
+  "uploaded_to_assistant_utc": "2026-09-30T17:44:02",
+  "first_week4_kickoff": "2026-10-01",
+  "made_before_week4_kickoff": true,
+  "file_content_check": "single-game scale (max 22.6 pts); all 32 teams present, consistent with a 32-team week (week 3 or 4); not consistent with week 5 (CAR and KC on bye). The specific week cannot be confirmed from file contents.",
+  "files": {
+    "fp_weekly/flx_2026_wk04.csv": {
+      "rows": 458,
+      "sha256": "0513a99b3f2b5284415d44989c153092f86227a9b20f8d0e0334e6906fc21d08"
+    },
+    "fp_weekly/qb_2026_wk04.csv": {
+      "rows": 76,
+      "sha256": "b7b385b5bcabb75ba0843fe5be51f9831e3bc8f71b4058f20b1bcc19c4e415da"
+    }
+  }
+}

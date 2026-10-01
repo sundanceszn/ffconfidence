@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Weekly player outlook</title>
+<style>
+:root{
+  --bg:#ffffff; --surface:#f5f5f3; --text:#1f1f1d; --muted:#6b6b66; --border:#e3e3de;
+  --accent:#2a78d6; --accent-soft:#e6f0fb; --warn:#b4540a; --warn-soft:#fdf0e3; --bad:#b3261e; --ok:#1e7a46;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#161615; --surface:#222220; --text:#ededea; --muted:#9a9a93; --border:#34342f;
+         --accent:#5aa2f0; --accent-soft:#1c2a3b; --warn:#f0a35c; --warn-soft:#33281b; --bad:#f2837c; --ok:#6cc58f; }
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+body{padding:env(safe-area-inset-top,0) 16px env(safe-area-inset-bottom,0)}
+main{max-width:920px;margin:0 auto;padding:20px 0 48px}
+h1{font-size:22px;margin:0 0 4px;font-weight:650}
+.sub{color:var(--muted);font-size:13px;margin:0 0 14px}
+.banner{background:var(--warn-soft);color:var(--text);border-left:3px solid var(--warn);padding:10px 12px;border-radius:6px;font-size:13px;margin:0 0 14px}
+.tabs,.pills{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+button,select,input{font:inherit;color:var(--text)}
+.tabs button,.pills button{background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 14px;cursor:pointer}
+.tabs button[aria-pressed="true"],.pills button[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+.controls input[type=search],.controls select{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 10px}
+.controls input[type=search]{flex:1;min-width:150px}
+.controls label{font-size:13px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.row{display:grid;grid-template-columns:28px minmax(0,1fr) 150px 64px 60px;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--border)}
+.row.head{border-top:0;color:var(--muted);font-size:12px;padding-bottom:4px}
+.rk{color:var(--muted);font-size:13px;text-align:right}
+.mv{font-size:10px;line-height:1.1;margin-top:2px;font-weight:600;white-space:nowrap}.mv.up{color:var(--ok)}.mv.dn{color:var(--bad)}
+.nm{min-width:0}
+.nm b{font-weight:600}
+.nm .meta{color:var(--muted);font-size:12px}
+.badge{display:inline-block;font-size:11px;padding:1px 7px;border-radius:999px;margin-left:6px;vertical-align:1px;font-weight:600}
+.badge.Out,.badge.Doubtful{background:var(--bad);color:#fff}
+.badge.Questionable{background:var(--warn);color:#fff}
+.badge.ret{background:var(--surface);color:var(--muted);border:1px solid var(--border);font-weight:500}
+.conf{display:flex;align-items:center;gap:8px}
+.bar{flex:1;height:10px;background:var(--surface);border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:0 5px 5px 0}
+.pct{width:38px;text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.num.dim{color:var(--muted)}
+.note{color:var(--muted);font-size:12.5px;margin:14px 0 0}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin:0 0 14px}
+.card h2{font-size:15px;margin:0 0 8px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{padding:6px 8px;border-top:1px solid var(--border);text-align:right;font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-weight:500;border-top:0}
+.empty{color:var(--muted);padding:18px 0}
+.badge.pos{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent)}
+.um{padding:8px 0;border-top:1px solid var(--border)}
+.um .meta{color:var(--muted);font-size:12.5px}
+details.card summary{cursor:pointer}
+button small{font-size:10px;opacity:.7;font-weight:500}
+.good{color:var(--ok)} .bad{color:var(--bad)}
+@media (max-width:620px){
+  .row{grid-template-columns:22px minmax(0,1fr) 112px 54px}
+  .row .hide-sm{display:none}
+  main{padding-top:14px}
+}
+
+/* position colours: --c text, --t tint, --b border/bar/dot */
+:root{
+  --c-QB:#b71c1c;--t-QB:#fdecea;--b-QB:#d93636;
+  --c-RB:#1a5fb4;--t-RB:#e6f0fb;--b-RB:#2a78d6;
+  --c-WR:#17683a;--t-WR:#e5f4ea;--b-WR:#2e9e5b;
+  --c-TE:#7a5a00;--t-TE:#fff3c4;--b-TE:#e0b100;
+  --c-K:#6a2fa8;--t-K:#f1e8fa;--b-K:#8e52cc;
+  --c-DST:#6b3d20;--t-DST:#f3e8e0;--b-DST:#8b5a3c;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --c-QB:#f2837c;--t-QB:#3a1f1d;--b-QB:#f2837c;
+    --c-RB:#5aa2f0;--t-RB:#1c2a3b;--b-RB:#5aa2f0;
+    --c-WR:#6cc58f;--t-WR:#1b2f24;--b-WR:#6cc58f;
+    --c-TE:#f2c94c;--t-TE:#35300f;--b-TE:#f2c94c;
+    --c-K:#b793e6;--t-K:#2a2036;--b-K:#b793e6;
+    --c-DST:#c99a78;--t-DST:#33261d;--b-DST:#c99a78;
+  }
+}
+:root[data-theme="dark"]{
+  --c-QB:#f2837c;--t-QB:#3a1f1d;--b-QB:#f2837c;
+  --c-RB:#5aa2f0;--t-RB:#1c2a3b;--b-RB:#5aa2f0;
+  --c-WR:#6cc58f;--t-WR:#1b2f24;--b-WR:#6cc58f;
+  --c-TE:#f2c94c;--t-TE:#35300f;--b-TE:#f2c94c;
+  --c-K:#b793e6;--t-K:#2a2036;--b-K:#b793e6;
+  --c-DST:#c99a78;--t-DST:#33261d;--b-DST:#c99a78;
+}
+.p-QB{--c:var(--c-QB);--t:var(--t-QB);--b:var(--b-QB)}
+.p-RB{--c:var(--c-RB);--t:var(--t-RB);--b:var(--b-RB)}
+.p-WR{--c:var(--c-WR);--t:var(--t-WR);--b:var(--b-WR)}
+.p-TE{--c:var(--c-TE);--t:var(--t-TE);--b:var(--b-TE)}
+.p-K{--c:var(--c-K);--t:var(--t-K);--b:var(--b-K)}
+.p-DST{--c:var(--c-DST);--t:var(--t-DST);--b:var(--b-DST)}
+.p-FLEX{--c:var(--text);--t:var(--surface);--b:var(--border)}
+#pos button{color:var(--text);position:relative}
+#pos button::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--b);margin-right:6px;vertical-align:0}
+#pos button.p-FLEX::before{background:conic-gradient(var(--b-RB) 0 33.3%,var(--b-WR) 0 66.6%,var(--b-TE) 0)}
+#pos button[aria-pressed="true"]{background:var(--t);border-color:var(--b);color:var(--c);font-weight:650}
+.row .badge.pos{color:var(--c);background:var(--t);border:1px solid var(--b)}
+
+/* confidence tiers: one teal ramp (positions already use red/green/yellow, so no stoplight colours) */
+:root{--tier1:#c9d1cf;--tier2:#7fc4bb;--tier3:#2a9d8f;--tier4:#0b6b63}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--tier1:#4a5553;--tier2:#2f7f77;--tier3:#2fb3a4;--tier4:#5eead4}}
+:root[data-theme="dark"]{--tier1:#4a5553;--tier2:#2f7f77;--tier3:#2fb3a4;--tier4:#5eead4}
+.t1{--tier:var(--tier1)}.t2{--tier:var(--tier2)}.t3{--tier:var(--tier3)}.t4{--tier:var(--tier4)}
+.row .bar i{background:var(--tier)}
+.bar{position:relative}
+.bar::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to right,transparent calc(25% - 1px),var(--bg) calc(25% - 1px) 25%,transparent 25% calc(50% - 1px),var(--bg) calc(50% - 1px) 50%,transparent 50% calc(75% - 1px),var(--bg) calc(75% - 1px) 75%,transparent 75%)}
+.legend{display:flex;gap:4px 12px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin:0 0 6px}
+.legend span{display:inline-flex;align-items:center}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;background:var(--tier)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Weekly player outlook</h1>
+  <p class="sub" id="sub">Loading…</p>
+  <div id="banner"></div>
+  <div class="tabs" id="tabs" role="tablist">
+    <button data-tab="week" aria-pressed="true">This week</button>
+    <button data-tab="track" aria-pressed="false">Track record</button>
+    <button data-tab="about" aria-pressed="false">How to read this</button>
+  </div>
+
+  <section id="week">
+    <div class="pills" id="pos"></div>
+    <div class="controls">
+      <input type="search" id="q" placeholder="Search a player or team" aria-label="Search">
+      <select id="model" aria-label="Model version" style="display:none"><option value="v02">Model: v0.2 (frozen)</option><option value="v03">Model: v0.3 (adds last season)</option></select>
+      <select id="sort" aria-label="Sort by">
+        <option value="p_startable">Sort: chance startable</option>
+        <option value="pred_ppg_next4">Sort: predicted points</option>
+        <option value="std">Sort: season points per game</option>
+      </select>
+      <label id="hidewrap" style="display:none"><input type="checkbox" id="hideout"> Hide Out / Doubtful</label>
+    </div>
+    <div id="betanote"></div>
+    <div class="legend"><span class="t4"><i></i>75%+ strong</span><span class="t3"><i></i>50-74 solid</span><span class="t2"><i></i>25-49 risky</span><span class="t1"><i></i>under 25 long shot</span></div>
+    <div id="list"></div>
+    <p class="note" id="listnote"></p>
+    <div id="unmodeled"></div>
+  </section>
+
+  <section id="track" hidden></section>
+
+  <section id="about" hidden>
+    <div class="card">
+      <h2>What the percentage means</h2>
+      <p>The chance that a player finishes inside the top group at his position (<span id="kline"></span>), by average points over his team's next four games. It is not a start/sit call: pick the level of risk you are comfortable with.</p>
+      <p>FLEX pools running backs, receivers and tight ends into one list, ranked together, so you can compare across positions.</p>
+      <p>The bar colour shows how strong the chance is: 75% and up is strong, 50-74 solid, 25-49 risky, under 25 a long shot. The tick marks on each bar sit at 25, 50 and 75. Colours are absolute, so kickers and defenses, which are hard to predict, mostly show as risky. In past seasons players in each band finished in the top group about 12% (under 25), 37% (25-49), 62% (50-74) and 78% (75+) of the time.</p>
+      <p>Predicted points is the model's estimate of his average half-PPR points per game over those four games, counting missed games as zero. It runs lower than a one-game projection by design.</p>
+    </div>
+    <div class="card">
+      <h2>What goes in</h2>
+      <p>Recent points, carries, targets and pass attempts; betting lines for the next game (total, implied team points, home or away); on the Friday run, the final injury report. Nothing else: no scheme, depth-chart or news information.</p>
+    </div>
+    <div class="card">
+      <h2>How much to trust it</h2>
+      <p>On 2021-2025 history the model beat simple rules by a small margin (roughly 0.01-0.02 in AUC). Stated probabilities matched real outcomes within about 3-5 points on average. The edge is modest: use it as one input, and trust the Track record tab over the backtest once it has data.</p>
+      <p>What it is best at: finding and keeping value over the next month (waiver claims, hold or drop). In past seasons its top waiver picks outscored the picks a plain season average would make by about 1.4 points per game at QB and 1.6 at RB (reliable across all five seasons). At WR (about +1.1) and TE (about +0.5) it was ahead on average but not reliably. What it is not good at: choosing between players you already own. Among strong RBs it did slightly worse than just trusting the season average, so for that call lean on the "So far" column and your own judgment.</p>
+      <p>From Week 5 on, a small ▲ or ▼ with a number beside a rank means the player moved that many places since the previous week's run of the same type (Tuesday to Tuesday, Friday to Friday). It appears only when his chance moved 10 or more points, because small rank changes are mostly noise. It describes what changed; in past seasons it was not a buy or sell signal.</p>
+      <p>The models are frozen for the season. v0.2 is the main version. v0.3 adds last season's points per game and runs alongside it (QB/RB/WR/TE only); in the backtest it helped WR and TE and early-season QB. Both have their own track record.</p>
+    </div>
+  </section>
+  <p class="note">Data: nflverse (player stats, injuries, schedule and lines). Not affiliated with the NFL or any fantasy site. Not betting or financial advice.</p>
+</main>
+
+<script>
+const POS=["QB","RB","WR","TE","FLEX","K","DST"];
+const K={QB:12,RB:24,WR:36,TE:12,FLEX:72,K:12,DST:12};
+const GROUP={FLEX:["RB","WR","TE"]};
+const BETA={K:1,DST:1};
+const tier=pc=>pc>=75?"t4":pc>=50?"t3":pc>=25?"t2":"t1";
+let DATA=null, SCORES=null, STATUS=null, PREV=null, pos="QB";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=(v,d=1)=>v==null||isNaN(v)?"–":Number(v).toFixed(d);
+
+async function load(){
+  try{
+    const r=await fetch("data/latest.json",{cache:"no-store"}); if(!r.ok) throw new Error(r.status);
+    DATA=await r.json();
+  }catch(e){ $("#sub").textContent="No data yet. The first weekly run has not completed."; $("#list").innerHTML='<div class="empty">Nothing to show yet.</div>'; }
+  try{ const r=await fetch("data/scores.json",{cache:"no-store"}); if(r.ok) SCORES=await r.json(); }catch(e){}
+  try{ const r=await fetch("data/status.json",{cache:"no-store"}); if(r.ok) STATUS=await r.json(); }catch(e){}
+  try{ const r=await fetch("data/previous.json",{cache:"no-store"}); if(r.ok) PREV=await r.json(); }catch(e){}
+  init();
+}
+
+function init(){
+  $("#kline").textContent="12 QBs, 24 RBs, 36 WRs, 12 TEs, the top 72 of RB/WR/TE combined for FLEX, and 12 each of K and DST";
+  $("#pos").innerHTML=POS.map(p=>`<button class="p-${p}" data-pos="${p}" aria-pressed="${p===pos}">${p}${BETA[p]?" <small>beta</small>":""}</button>`).join("");
+  $("#pos").onclick=e=>{const b=e.target.closest("button"); if(!b) return; pos=b.dataset.pos; document.querySelectorAll("#pos button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.pos===pos)); renderList();};
+  document.querySelectorAll("#tabs button").forEach(b=>b.onclick=()=>{
+    document.querySelectorAll("#tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));
+    ["week","track","about"].forEach(id=>$("#"+id).hidden=(id!==b.dataset.tab));
+    if(b.dataset.tab==="track") renderTrack();
+  });
+  $("#q").oninput=renderList; $("#sort").onchange=renderList; $("#hideout").onchange=renderList; $("#model").onchange=renderList;
+  if(!DATA) return;
+  const m=DATA.meta, when=new Date(m.created_utc);
+  $("#sub").textContent=`Decisions for Week ${m.decision_for_week} · data through Week ${m.through_week} · model ${m.model_version}, ${m.run==="fri"?"Friday":"Tuesday"} run · updated ${when.toLocaleString([], {dateStyle:"medium",timeStyle:"short"})}`;
+  const notes=[];
+  if(m.through_week<5) notes.push(`Only ${m.through_week} games of data so far, so this is the weakest part of the season for the model.`);
+  if(m.run==="tue") notes.push("Tuesday run: no injury information yet. Check statuses before acting; the Friday run adds them.");
+  if(m.created_before_first_kickoff===false) notes.push("This run was produced after the first kickoff of the week.");
+  if(m.run==="fri"&&m.injury_final===false) notes.push("The injury report was incomplete when this ran, so injury effects may be missing.");
+  if(m.weeks_left!=null&&m.weeks_left<4) notes.push(`Only ${m.weeks_left} regular-season week${m.weeks_left===1?"":"s"} left, so the "next four games" window is shortened.`);
+  if(STATUS && /^(waiting|failed)/.test(STATUS.outcome)) notes.push(`Latest check (${new Date(STATUS.checked_utc).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})}): ${STATUS.message}. The numbers below are from the previous run.`);
+  const ageDays=(Date.now()-when.getTime())/864e5;
+  if(ageDays>9 && !(STATUS&&STATUS.outcome==="season_complete")) notes.push(`These numbers are ${Math.floor(ageDays)} days old and may be out of date.`);
+  $("#banner").innerHTML=notes.length?`<div class="banner">${notes.map(esc).join("<br>")}</div>`:"";
+  $("#hidewrap").style.display=m.run==="fri"?"flex":"none";
+  renderList();
+}
+
+/*MOVES-START*/
+// Rank movement versus the previous week's same-type run, among ALL players in the group (not the search-filtered list).
+// Shown only when the chance itself moved by at least `thresh` (default 10 points); rank spots alone are mostly noise.
+function computeMoves(curRows, prevRows, fcur, fprev, thresh){
+  thresh = thresh==null?0.10:thresh;
+  const cur=curRows.filter(p=>fcur(p)!=null).sort((a,b)=>fcur(b)-fcur(a));
+  const prv=prevRows.filter(p=>fprev(p)!=null).sort((a,b)=>fprev(b)-fprev(a));
+  const pr=new Map(prv.map((p,i)=>[p.player_id+"|"+p.team,{rank:i+1,v:fprev(p)}]));
+  const out=new Map();
+  cur.forEach((p,i)=>{
+    const q=pr.get(p.player_id+"|"+p.team); if(!q) return;
+    const dp=fcur(p)-q.v, spots=q.rank-(i+1);
+    if(Math.abs(dp)>=thresh-1e-9 && spots!==0) out.set(p.player_id+"|"+p.team,{spots,dp});
+  });
+  return out;
+}
+/*MOVES-END*/
+function rowsFor(p){
+  if(GROUP[p]) return DATA.players.filter(x=>GROUP[p].includes(x.pos)&&x.flex_p!=null);
+  return DATA.players.filter(x=>x.pos===p);
+}
+function unmodeledFor(p){
+  const g=GROUP[p]||[p];
+  return (DATA.unmodeled||[]).filter(x=>g.includes(x.pos));
+}
+function renderList(){
+  if(!DATA) return;
+  const q=$("#q").value.trim().toLowerCase(), hide=$("#hideout").checked, flex=pos==="FLEX";
+  let key=$("#sort").value;
+  if(flex){ key = key==="p_startable"?"flex_p" : key==="pred_ppg_next4"?"flex_pred" : key; }
+  const coreP=["QB","RB","WR","TE"].includes(pos), hasV3=DATA.meta.models&&DATA.meta.models.includes("v0.3");
+  $("#model").style.display=(coreP&&hasV3)?"":"none";
+  const useV3=coreP&&hasV3&&$("#model").value==="v03";
+  let rows=rowsFor(pos);
+  if(q) rows=rows.filter(p=>(p.player_name+" "+p.team+" "+(p.nx_opp_team||"")).toLowerCase().includes(q));
+  if(hide) rows=rows.filter(p=>p.injury_next!=="Out"&&p.injury_next!=="Doubtful");
+  const pv=p=>useV3&&p.v03_p!=null?p.v03_p:(flex?p.flex_p:p.p_startable), dv=p=>useV3&&p.v03_pred!=null?p.v03_pred:(flex?p.flex_pred:p.pred_ppg_next4);
+  const val=(p)=>key==="p_startable"||key==="flex_p"?pv(p):key==="pred_ppg_next4"||key==="flex_pred"?dv(p):p[key];
+  rows.sort((a,b)=>(val(b)??-99)-(val(a)??-99));
+  const label=flex?"Chance top 72 flex":`Chance top ${K[pos]} ${pos}`;
+  let MOVES=null;
+  if(PREV&&PREV.players&&(key==="p_startable"||key==="flex_p")){
+    const inGrp=x=>GROUP[pos]?GROUP[pos].includes(x.pos):x.pos===pos;
+    const cf=p=>flex?p.flex_p:(useV3&&p.v03_p!=null?p.v03_p:p.p_startable);
+    const pf=p=>flex?p.pf:(useV3&&p.p3!=null?p.p3:p.p);
+    MOVES=computeMoves(rowsFor(pos),PREV.players.filter(inGrp),cf,pf);
+  }
+  $("#betanote").innerHTML=BETA[pos]?`<div class="banner">Beta: ${pos==="DST"?"defenses":"kickers"} are much harder to predict than other positions. In the backtest the model beat a simple season average by about 0.04 AUC, but absolute accuracy is low (AUC 0.60-0.64), so treat this as a nudge, not a call.${pos==="DST"?" The biggest driver is how many points the opponent is expected to score.":""}</div>`:"";
+  const head=`<div class="row head"><div></div><div>${pos==="DST"?"Defense":pos==="K"?"Kicker":"Player"}</div><div>${label}</div><div class="num">Pred pts</div><div class="num hide-sm">So far</div></div>`;
+  $("#list").innerHTML=head+rows.map((p,i)=>{
+    const vv=pv(p), pc=Math.round((vv||0)*100), pred=dv(p);
+    const opp=p.nx_opp_team?`${p.nx_home?"vs":"at"} ${esc(p.nx_opp_team)}`:"bye / TBD";
+    let env="";
+    if(p.pos==="DST") env=p.nx_opp_impl!=null?` · opp expected ${fmt(p.nx_opp_impl)} pts`:"";
+    else if(p.pos==="K") env=(p.nx_impl!=null?` · team expected ${fmt(p.nx_impl)} pts`:"")+(p.nx_indoor?" · indoors":"");
+    else env=p.nx_total!=null?` · total ${fmt(p.nx_total)}`:"";
+    const tag=flex?`<span class="badge pos">${esc(p.pos)}</span>`:"";
+    const inj=p.injury_next?`<span class="badge ${esc(p.injury_next)}">${esc(p.injury_next)}</span>`:"";
+    const ret=p.played_last===0&&p.pos!=="DST"?`<span class="badge ret">missed last game</span>`:"";
+    const played=p.next_game_played?`<span class="badge ret">game already played</span>`:"";
+    const moved=p.recent_team_change?`<span class="badge ret">changed teams</span>`:"";
+    const nm=p.pos==="DST"?esc(p.player_name):esc(p.player_name);
+    const mv=MOVES&&MOVES.get(p.player_id+"|"+p.team), mvh=mv?`<div class="mv ${mv.spots>0?"up":"dn"}">${mv.spots>0?"▲":"▼"}${Math.abs(mv.spots)}</div>`:"";
+    return `<div class="row p-${flex?p.pos:pos}"><div class="rk">${i+1}${mvh}</div>
+      <div class="nm"><b>${nm}</b>${tag}${inj}${ret}${played}${moved}<div class="meta">${p.pos==="DST"?"":esc(p.team)+" · "}${opp}${env}</div></div>
+      <div class="conf"><div class="bar"><i class="${tier(pc)}" style="width:${pc}%"></i></div><div class="pct">${pc}%</div></div>
+      <div class="num">${fmt(pred)}</div><div class="num dim hide-sm">${fmt(p.std)}</div></div>`;
+  }).join("")||'<div class="empty">No players match.</div>';
+  $("#listnote").textContent=`${useV3?"Model v0.3 (adds last season's points per game). ":""}${rows.length} shown. "Pred pts" is average points per game over the next four games; "So far" is the season average.`+(MOVES&&MOVES.size?` ▲/▼ = places moved since the Week ${PREV.meta.decision_for_week} ${PREV.meta.run==="fri"?"Friday":"Tuesday"} run, shown only when the chance moved 10+ points. It describes what changed; in past seasons risers and fallers did not beat or miss their forecasts in any reliable way.`:"");
+  const um=unmodeledFor(pos).filter(x=>!q||(x.player_name+" "+x.team).toLowerCase().includes(q));
+  $("#unmodeled").innerHTML=um.length?`<details class="card"><summary><b>Not modeled: no recent games (${um.length})</b></summary>
+    <p class="note">These players had real usage earlier this season but no stat line in their team's last three games (injured, just back, or benched). The model has no estimate for them. Use the status as context for hold/drop.</p>
+    ${um.map(x=>`<div class="um"><div><b>${esc(x.player_name)}</b> <span class="meta">${esc(x.pos)} · ${esc(x.team)}</span></div>
+      <div class="meta">${fmt(x.season_ppg)} pts/game in ${x.games} games · last played week ${x.last_week} · missed ${x.team_games_missed} team games${x.injury_status?` · ${esc(x.injury_status)}`:""}${x.injury_detail?` ${esc(x.injury_detail)}`:""}</div></div>`).join("")}</details>`:"";
+}
+
+function renderTrack(){
+  const el=$("#track");
+  if(!SCORES||!SCORES.snapshots_scored){
+    el.innerHTML=`<div class="card"><h2>No scored weeks yet</h2><p>A snapshot is graded once all four of the games that follow it are complete. The first one becomes gradable after Week 7.</p><p>Every snapshot is saved in the project's <code>snapshots</code> folder with file hashes, so the record cannot be quietly rewritten.</p></div>`;
+    return;
+  }
+  const pct=v=>v==null?"–":v.toFixed(3), ORDER=["QB","RB","WR","TE","FLEX","K","DST"];
+  let html=`<p class="note">${SCORES.snapshots_scored} snapshots graded so far.</p>`;
+  Object.keys(SCORES.pooled).sort().forEach(ver=>{
+    const P=SCORES.pooled[ver];
+    const rows=ORDER.filter(p=>P[p]).map(p=>{const g=P[p].gain_vs_season_ppg;
+      return `<tr><td>${p}</td><td>${P[p].snapshots}</td><td>${pct(P[p].auc_season_ppg)}</td><td>${pct(P[p].auc_pred)}</td><td class="${g>0?"good":"bad"}">${g>0?"+":""}${g.toFixed(3)}</td><td>${P[p].brier_skill.toFixed(3)}</td></tr>`;}).join("");
+    html+=`<div class="card"><h2>Model ${esc(ver)}: does it beat a simple season average?</h2>
+      <table><tr><th>Position</th><th>Graded</th><th>AUC: season avg</th><th>AUC: model</th><th>Gain</th><th>Brier skill</th></tr>${rows}</table></div>`;
+  });
+  const pr=SCORES.paired||{};
+  if(Object.keys(pr).length) html+=`<div class="card"><h2>v0.3 vs v0.2 on the same weeks</h2><table><tr><th>Position</th><th>Graded</th><th>AUC gain</th></tr>${["QB","RB","WR","TE"].filter(p=>pr[p]).map(p=>`<tr><td>${p}</td><td>${pr[p].snapshots}</td><td class="${pr[p].auc_gain_v03_minus_v02>0?"good":"bad"}">${pr[p].auc_gain_v03_minus_v02>0?"+":""}${pr[p].auc_gain_v03_minus_v02.toFixed(3)}</td></tr>`).join("")}</table></div>`;
+  const vers=Object.keys(SCORES.reliability||{}).sort();
+  if(vers.length){const rel=SCORES.reliability[vers[0]].map(r=>`<tr><td>${r.bin}</td><td>${r.n}</td><td>${Math.round(r.predicted*100)}%</td><td>${Math.round(r.actual*100)}%</td></tr>`).join("");
+    html+=`<div class="card"><h2>Do the percentages mean what they say? (${esc(vers[0])})</h2><table><tr><th>Stated chance</th><th>Players</th><th>Average stated</th><th>Actually startable</th></tr>${rel}</table></div>`;}
+  html+=`<p class="note">AUC is 0.5 for a coin flip and 1.0 for perfect. Gains under about 0.02 are hard to tell apart from noise with this few weeks.</p>`;
+  el.innerHTML=html;
+}
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+{
+  "model_version": "v0.2",
+  "run": "tue",
+  "season": 2026,
+  "through_week": 3,
+  "decision_for_week": 4,
+  "created_utc": "2026-09-30T22:41:32+00:00",
+  "first_kickoff_of_decision_week_utc": "2026-10-02T00:15:00+00:00",
+  "created_before_first_kickoff": true,
+  "games_of_decision_week_already_scored": 0,
+  "asof_simulation": false,
+  "rows": 222,
+  "rows_by_pos": {
+    "WR": 88,
+    "RB": 71,
+    "QB": 32,
+    "TE": 31
+  },
+  "lines_missing_rows": 0,
+  "injury_report_teams_for_decision_week": null,
+  "train_seasons": [
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "train_rows_by_pos": {
+    "QB": 2736,
+    "RB": 6251,
+    "WR": 7466,
+    "TE": 2631
+  },
+  "features": [
+    "pts3",
+    "std",
+    "c3",
+    "t3",
+    "a3",
+    "c1",
+    "t1",
+    "a1",
+    "missed3",
+    "played_last",
+    "nx_total",
+    "nx_impl",
+    "nx_home",
+    "nx_impl_x",
+    "nx_total_x"
+  ],
+  "ridge_lambda": 20.0,
+  "logit_C": 0.1,
+  "startable_top_K": {
+    "QB": 12,
+    "RB": 24,
+    "WR": 36,
+    "TE": 12
+  },
+  "input_sha256": {
+    "weekly_stats": "e293e213908f746db982cd9112f5016125a42eeeec16c4773b35c6cc5edf6327",
+    "schedule": "3a4e449f55fc01d36472daf99e1434f01b62c9e5681ce1e817a311e363f21d3b"
+  },
+  "snapshot_sha256": "be768490930c9ecc39cf087cd63f599c04da794a9a4b619c4c5078c88eb55bf9",
+  "pandas": "3.0.2",
+  "numpy": "2.4.4"
+}

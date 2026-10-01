@@ -1,0 +1,9 @@
+{
+ "checked_utc": "2026-10-01T10:04:57+00:00",
+ "outcome": "already_exists",
+ "message": "snapshots for week 3 (tue) already exist, left untouched",
+ "season": 2026,
+ "through_week": 3,
+ "decision_for_week": 4,
+ "run": "tue"
+}

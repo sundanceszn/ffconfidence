@@ -1,0 +1,51 @@
+{
+  "model_version": "v0.2-ext",
+  "run": "tue",
+  "season": 2026,
+  "through_week": 3,
+  "decision_for_week": 4,
+  "created_utc": "2026-10-01T09:23:43+00:00",
+  "created_before_first_kickoff": true,
+  "asof_simulation": false,
+  "core_snapshot_sha256": "0fb0f70e1e1afcbe8af41870d008153c43d6aca813741a04f86281961fdfe15b",
+  "core_recompute_max_abs_diff": null,
+  "kd_rows": 64,
+  "flex_rows": 190,
+  "kd_train_rows": {
+    "K": 2903,
+    "DST": 2718
+  },
+  "flex_train_rows": 16047,
+  "kd_features": [
+    "pts3",
+    "std",
+    "c3",
+    "t3",
+    "a3",
+    "c1",
+    "t1",
+    "a1",
+    "missed3",
+    "played_last",
+    "nx_total",
+    "nx_impl",
+    "nx_opp_impl",
+    "nx_home",
+    "nx_indoor",
+    "nx_impl_x",
+    "nx_opp_impl_x",
+    "nx_total_x"
+  ],
+  "kd_top_K": {
+    "K": 12,
+    "DST": 12
+  },
+  "flex_top": 72,
+  "scoring_assumptions": "K: FG 3/4/5 by distance, PAT 1, miss -1. DST: sack 1, INT 2, fumble rec 2, safety 2, block 2, TD 6, points-allowed tiers 10/7/4/1/0/-1/-4",
+  "sha256": {
+    "kd": "31ead0606d95bd3629bbb2befab8d621dfcefbdf46ff41217df0a054c5b12376",
+    "flex": "07015aefffbc25a4b81a96aafaa7778a16b7bbc68079989a4d648fd7aefb1f5b",
+    "unmodeled": "edf2829b850420f6feef0aa5e31873b0095cbfb508efe8402ad5c623f95879db"
+  },
+  "unmodeled_rows": 0
+}

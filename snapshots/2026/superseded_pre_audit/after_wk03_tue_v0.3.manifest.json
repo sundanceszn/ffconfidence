@@ -1,0 +1,61 @@
+{
+  "model_version": "v0.3",
+  "run": "tue",
+  "season": 2026,
+  "through_week": 3,
+  "decision_for_week": 4,
+  "created_utc": "2026-09-30T23:18:02+00:00",
+  "created_before_first_kickoff": true,
+  "asof_simulation": false,
+  "rows": 222,
+  "train_seasons": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "train_rows_by_pos": {
+    "QB": 2410,
+    "RB": 5522,
+    "WR": 6565,
+    "TE": 2330
+  },
+  "features": [
+    "pts3",
+    "std",
+    "c3",
+    "t3",
+    "a3",
+    "c1",
+    "t1",
+    "a1",
+    "missed3",
+    "played_last",
+    "nx_total",
+    "nx_impl",
+    "nx_home",
+    "nx_impl_x",
+    "nx_total_x",
+    "ppg_prev",
+    "gp_prev",
+    "rookie",
+    "ppg_prev_w"
+  ],
+  "ridge_lambda": 20.0,
+  "logit_C": 0.1,
+  "startable_top_K": {
+    "QB": 12,
+    "RB": 24,
+    "WR": 36,
+    "TE": 12
+  },
+  "input_sha256": {
+    "weekly_stats": "e293e213908f746db982cd9112f5016125a42eeeec16c4773b35c6cc5edf6327",
+    "schedule": "2b704cc00c989d73b33ac11c218403aa68c98ed678e4871a2eebf26a0e52cfd8"
+  },
+  "rookie_rows": 21,
+  "snapshot_sha256": "81c48abb46890ac22d4af171396aefa1bf0c3507431ee38a0f9ffc1882692931"
+}
